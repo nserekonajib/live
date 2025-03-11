@@ -29,4 +29,4 @@ def home():
 
 if __name__ == "__main__":
     threading.Thread(target=keep_api_alive, daemon=True).start()
-    app.run(port=6060, debug=True)
+    app.run(port=6060, debug=False)
