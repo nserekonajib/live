@@ -1,8 +1,11 @@
+from flask import Flask
 import requests
 import time
+import threading
 
-# Replace with your actual API endpoint
+app = Flask(__name__)
 API_URL = "https://oga-fx12.onrender.com/api/images"
+
 
 def keep_api_alive():
     while True:
@@ -15,8 +18,15 @@ def keep_api_alive():
         except requests.exceptions.RequestException as e:
             print(f"Error: {e}")
         
-        # Wait for 5 minutes before sending the next request
-        time.sleep(30)
+        # Wait for 40 seconds before sending the next request
+        time.sleep(40)
+
+
+@app.route('/')
+def home():
+    return "API Keeper is running!"
+
 
 if __name__ == "__main__":
-    keep_api_alive()
+    threading.Thread(target=keep_api_alive, daemon=True).start()
+    app.run(port=6060, debug=True)
